@@ -1,6 +1,6 @@
 class Alga
 	SIZE_SUDOKU = 4
-	OXYGEN_ONE_VALUE = 2.08
+	OXYGEN_ONE_VALUE = 100/((SIZE_SUDOKU ** 2) * 3).to_f
 	
 	attr_accessor(:oxygen, :content, :new_content)	
 
