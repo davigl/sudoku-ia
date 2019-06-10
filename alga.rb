@@ -26,14 +26,35 @@ class Alga
 	end
 
 	def refill_content(old_content)
-		old_content.each.map { |line| line.each.map { |v| line.count(v) > 1 ? nil : v } }
-		old_content.transpose.each.map { |column| column.each.map { |v| column.count(v) > 1 ? nil : v } }
+		old_content.each.map do |line| 
+			line.each_with_index { |v, i| line.count(v) > 1 ? worst_of_line(old_content, line, v).each { |k, v| line[k.to_s.to_i] = nil } : v }
+		end
+	end
+
+	def worst_of_line(content, line, value)
+		temp = content.transpose
+		worst_indexes = {}
+		line_count = line.count(value) - 1
+
+		temp.each_with_index { |column, i| worst_indexes[i.to_s.to_sym] = column.count(value) if line[i] == value }
+
+		worst_indexes.sort_by {|k, v| v}.reverse.first(line_count).to_h
+	end
+
+	def worst_of_column(content, line, value)
+		temp = content.transpose
+		worst_indexes = {}
+		line_count = line.count(value) - 1
+
+		temp.each_with_index { |column, i| worst_indexes[i.to_s.to_sym] = column.count(value) }
+
+		worst_indexes.sort_by {|k, v| v}.reverse.first(line_count).to_h
 	end
 
 	def evaluate_oxygen
 		oxygen_produced = 0
 		squares = generate_squares(@new_content)
-			
+		
 		@new_content.each { |line| oxygen_produced += evaluate_line(line) }
 		@new_content.transpose.each { |column| oxygen_produced += evaluate_column(column) }
 		squares.each {|square| oxygen_produced += evaluate_square(square) }
