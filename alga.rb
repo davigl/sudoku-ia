@@ -6,13 +6,13 @@ class Alga
 	OXYGEN_ONE_VALUE = 100/((SIZE_SUDOKU ** 2) * 3).to_f
 	
 	# Métodos de Get (alga.oxygen, alga.content, alga.new_content)
-	# Varíaveis: oxygen:float; :content:array; new_content:array
+	# Variáveis: oxygen:float; :content:array; new_content:array
 
 	attr_accessor(:oxygen, :content, :new_content)	
 
 	# Construtor do Objeto Alga.
 	#
-	# Parametros: sudoku:array
+	# Parâmetros: sudoku:array
 	# Atributos: content:array ; new_content; oxygen:float
 
 	def initialize(sudoku)
