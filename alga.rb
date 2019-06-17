@@ -1,7 +1,4 @@
 class Alga
-
-	# Constantes
-
 	SIZE_SUDOKU = 4
 	OXYGEN_ONE_VALUE = 100/((SIZE_SUDOKU ** 2) * 3).to_f
 	
@@ -16,8 +13,8 @@ class Alga
 	# Atributos: content:array ; new_content; oxygen:float
 
 	def initialize(sudoku)
-		@content = fill_content(sudoku)
-		@new_content = @content
+		@content = Marshal.load(Marshal.dump(sudoku))
+		@new_content = fill_content(sudoku)
 		@new_content = refill_content(@new_content)
 		@oxygen = evaluate_oxygen
 	end
@@ -47,8 +44,14 @@ class Alga
 	# Parâmetros: old_content:array
 
 	def refill_content(old_content)
-		old_content.each.map do |line| 
-			line.each_with_index { |v, i| line.count(v) > 1 ? worst_of_line(old_content, line, v).each { |k, v| line[k.to_s.to_i] = nil } : v }
+		p @content
+		old_content.each_with_index.map do |line, i| 
+			cannot_remove = []
+
+			line.each_with_index do |v, j| 
+				cannot_remove << j if @content[i][j].eql? v
+				line.count(v) > 1 ? worst_of_line(old_content, cannot_remove, line, v,).each { |k, v| line[k.to_s.to_i] = nil } : v
+			end
 		end
 	end
 
@@ -57,7 +60,7 @@ class Alga
 	# Parâmetros: content:array; line:array; value:string
 	# Retorno: worst_indexes:hash
 
-	def worst_of_line(content, line, value)
+	def worst_of_line(content, cannot_remove, line, value)
 		temp = content.transpose
 		worst_indexes = {}
 		line_count = line.count(value) - 1
