@@ -5,7 +5,6 @@ class Oceano
         @algas = create_population(sudoku, populacao)
         @sudoku = sudoku
         @count_geracao = 0
-        @conjugation_rate = 10
     end
 
     def create_population(sudoku, populacao)
@@ -16,7 +15,7 @@ class Oceano
     	return algas
     end
 
-    def presentation
+    def self.presentation
     	puts "     *  *          /*._   "
 		puts " *  *'*  *'*   .-*'`   `*-.._.-'/"
 		puts "*'* *'*   **  < * ))     ,     ( "
@@ -47,70 +46,67 @@ class Oceano
     	puts "","Vamos começar?"
     	puts "O espaço de busca contém atualmente: #{@algas.size} algas"
     	puts "Elas devem solucionar o seguinte sudoku a partir da produção de oxigênio.", ""
+    	puts "-----------------------------------------------------------"
+    	
+    	@sudoku.each {|line| puts "                 | #{line} |" }
+    	
+    	puts "-----------------------------------------------------------", ""
+    	puts "O intuito do algoritmo é resolver o sudoku demonstrando as várias possiveis maneiras."
     	puts "","REGRAS"
     	puts "","* As algas que produzem baixas taxas de oxigênio serão eliminadas do oceano."
-    	puts "* As algas que produzem altas taxas de oxigênio se reproduzirão por divisão binária."
+    	puts "* As algas que produzem altas taxas de oxigênio irão se reproduzir por divisão binária."
     	puts "* As algas no oceano também podem se reproduzir por fragmentação.", ""
-    	puts "----------------------------------------------"
-    	
-    	@sudoku.each {|line| puts "          | #{line} |" }
-    	
-    	puts "----------------------------------------------", ""
+
+    	puts "Pressione a tecla enter para continuar"
+    	gets
     end
 
     def run
-    	presentation
-    	menu
+    	media_oxygen = @algas.sample.media_oxygen
 
         while true
+        	@algas.push(fragmentation(selection(@algas))) if rand > 0.99
     		@current_generation = Marshal.load(Marshal.dump(@algas))
-
-    		puts "Número de gerações: #{@count_geracao}"
-
-    		if @algas.size > 1
-
-    		end
-
+    		
 			@algas.each do |alga| 
-				# puts "sudoku: #{alga.new_content}"
-				alga.set_content
-				# alga.new_content.any? { |e| e.include?(nil) ? (done = false; alga.set_content) : nil }
-				# @algas.push(alga.binary_division) if alga.oxygen >= 90
-				# @algas.delete(alga) if alga.oxygen <= 60
+				alga.set_content if alga.oxygen < 100
 				
-				if alga.oxygen < 50
-					@algas.delete(alga)
-				end
-
-				if alga.oxygen.between?(85, 99) and not alga.already_cloned
-					@algas.push(binary_division(alga))
+				@algas.delete(alga) if alga.oxygen < media_oxygen
+					
+				if alga.oxygen.between?(92, 99) and not alga.already_cloned
+					@algas.push(alga.binary_division)
 				end
 			end
 
 			if @algas.size.eql? @current_generation.size
 		    	break if @current_generation.each_with_index.all? {|alga, i| alga.equal (@algas[i])}
 			end
+
+			@count_geracao += 1
         end
 
-		@count_geracao += 1
-        @algas.each {|alga| puts "sudoku: #{alga.new_content} oxigen: #{alga.oxygen}" if alga.oxygen.eql? (100.0)}
+        puts "Número de gerações: #{@count_geracao}", "Todas essas Algas possuem produção de oxigênio em 100%", ""
+        resolutions = []
+        @algas.each { |alga| resolutions.push alga.new_content if alga.oxygen.eql? 100.0 }
+        resolutions.uniq.each { |resolution| puts "sudoku: #{resolution} "}
 	end
 
-	def select(population)
+	def selection(population)
 		@algas.sample(2)
 	end
 
 	def fragmentation(selection)
-		selection.first.new_content.each_with_index.map {|line, i| line.each_with_index.map {|value, j| value.nil? ? selection.last.new_content[i][j] : value} }
-	end
+		sudoku = selection.first.new_content.each_with_index.map {|line, i| line.each_with_index.map {|value, j| value.nil? ? selection.last.new_content[i][j] : value} }
 
-	def binary_division(alga)
-		alga.already_cloned = true
-		child = Marshal.load(Marshal.dump(alga))
-
-		return child
+		return Alga.new(sudoku)
 	end
 end
 
-game = Oceano.new([[nil, nil, nil, nil], [nil, nil, nil, nil], [nil, nil, nil, nil], [nil, nil, nil, nil]], 5)
+Oceano.presentation
+
+puts "Digite o número de algas da população inicial."
+population = gets.chomp.to_i
+
+game = Oceano.new([[3, nil, 4, nil], [nil, 1, nil, 2], [nil, 4, nil, 3], [2, nil, 1, nil]], population)
+game.menu
 game.run

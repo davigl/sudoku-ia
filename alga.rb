@@ -14,8 +14,8 @@ class Alga
 
 	def initialize(sudoku)
 		@content = Marshal.load(Marshal.dump(sudoku))
-		@new_content = fill_content(sudoku)
-		@new_content = refill_content(@new_content)
+		@new_content = search_nutrients(sudoku)
+		@new_content = ocean_localization(@new_content)
 		@oxygen = evaluate_oxygen
 		@already_cloned = false
 	end
@@ -23,10 +23,14 @@ class Alga
 	# Método que recebe um sudoku pré-preenchido e termina de preenchê-lo
 	# com valores randomicos (1 até o tamanho do sudoku).
 	# 
+	# Contexto: As algas buscam por nutrientes no oceano utilizando fotossíntese 
+	# e produzindo oxigênio, para isso elas se movimentam (movimento próprio: amebóide) ou 
+	# (movimento não próprio: movimentação por ação do ambiente) pelo oceano.
+	#
 	# Parâmetros: sudoku:array
 	# Retorno: filled_array:array
 
-	def fill_content(sudoku)
+	def search_nutrients(sudoku)
 		filled_array = sudoku
 
 		SIZE_SUDOKU.times do |i|
@@ -42,9 +46,12 @@ class Alga
 
 	# Método que trata a alga, permancendo somente os valores corretos na matriz.
 	# 
+	# Contexto: As algas após busca de nutrientes, necessitam se localizar no espaço de busca (Oceano)
+	# , algas que se concentram perto da solução estão próximas a localizações de alta geração de nutrientes.
+	#
 	# Parâmetros: old_content:array
 
-	def refill_content(old_content)
+	def ocean_localization(old_content)
 		old_content.each_with_index.map do |line, i| 
 			line.each_with_index do |v, j| 
 				cannot_remove_line = []
@@ -81,6 +88,38 @@ class Alga
 		treat_squares(new_sudoku)
 
 		return new_sudoku
+	end
+
+
+	# Método para realizar divisão binária, a reprodução assexuada das algas.
+	#
+	# Contexto: As algas se reproduzem de duas formas, os seres unicelulares com divisão binária
+	# e os seres multicelulares por fragmentação do talo, como é comum nas algas filamentosas. 
+	#
+	# Retorno child:Alga
+
+	def binary_division
+		self.already_cloned = true
+
+		child = Marshal.load(Marshal.dump(self))
+
+		return child
+	end
+
+	# Método para avaliar a produção de oxigênio da Alga.
+	# 
+	# Contexto: As algas possuem uma taxa de produção de oxigênio, essa taxa é obtida quando
+	# a alga se encontra em pontos próximos a solução do sudoku.
+	#
+	# Retorno: oxygen_produced:float
+
+	def evaluate_oxygen
+		oxygen_produced = 0
+		
+		@new_content.each { |line| oxygen_produced += evaluate_line(line) }
+		@new_content.transpose.each { |column| oxygen_produced += evaluate_column(column) }
+		
+		return oxygen_produced
 	end
 
 	# Método auxiliar que retorna os piores indices para serem removidos em caso de valores clonados em uma linha.
@@ -137,19 +176,6 @@ class Alga
 		end
 	end
 
-	# Método para avaliar a produção de oxigênio da Alga.
-	#
-	# Retorno: oxygen_produced:float
-
-	def evaluate_oxygen
-		oxygen_produced = 0
-		
-		@new_content.each { |line| oxygen_produced += evaluate_line(line) }
-		@new_content.transpose.each { |column| oxygen_produced += evaluate_column(column) }
-		
-		return oxygen_produced
-	end
-
 	# Método auxiliar que retorna os quadrantes da matriz.
 	#
 	# Parâmetros: content:array
@@ -194,8 +220,8 @@ class Alga
 	# Método que atualiza os valores da alga.
 
 	def set_content
-		@new_content = fill_content(@new_content)
-		@new_content = refill_content(@new_content)
+		@new_content = search_nutrients(@new_content)
+		@new_content = ocean_localization(@new_content)
 		@oxygen = evaluate_oxygen
 	end
 	
@@ -203,5 +229,11 @@ class Alga
 
 	def equal(other)
 		self.new_content == other.new_content
+	end
+
+	# Método que retorna a média de oxigênio produzido.
+
+	def media_oxygen
+		return OXYGEN_ONE_VALUE * ((SIZE_SUDOKU ** 2) * 2) / 2.50
 	end
 end
