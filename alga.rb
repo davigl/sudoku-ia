@@ -103,7 +103,10 @@ class Alga
 		random ? worst_indexes.sort_by {|k, v| v}.reverse.first(line_count).to_h : worst_indexes.sort_by {|k, v| v}.first(line_count).to_h
 	end
 
-	# Not implemented yet
+	# Método auxiliar que retorna os piores indices para serem removidos em caso de valores clonados em uma coluna.
+	# 
+	# Parâmetros: column:array; cannot_remove_column:integer; value:integer
+	# Retorno: worst_indexes:array
 
 	def worst_of_column(column, cannot_remove_column, value)
 		worst_indexes = []
@@ -117,6 +120,11 @@ class Alga
 
 		random ? worst_indexes.first(column_count) : worst_indexes.last(column_count)
 	end
+	
+	# Método auxiliar que trata os quadrados do sudoku.
+	# 
+	# Parâmetros: content:array
+	# Retorno: content:array
 
 	def treat_squares(content)
 		size = content.size/2
@@ -183,13 +191,15 @@ class Alga
 		return column_oxygen_produced
 	end
 
-	# Not implemented yet.
+	# Método que atualiza os valores da alga.
 
 	def set_content
 		@new_content = fill_content(@new_content)
 		@new_content = refill_content(@new_content)
 		@oxygen = evaluate_oxygen
 	end
+	
+	# Método para verificar igualdade entre objetos Alga.
 
 	def equal(other)
 		self.new_content == other.new_content
