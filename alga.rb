@@ -1,11 +1,11 @@
 class Alga
 	SIZE_SUDOKU = 4
-	OXYGEN_ONE_VALUE = 100/((SIZE_SUDOKU ** 2) * 3).to_f
+	OXYGEN_ONE_VALUE = 100/((SIZE_SUDOKU ** 2) * 2).to_f
 	
 	# Métodos de Get (alga.oxygen, alga.content, alga.new_content)
 	# Variáveis: oxygen:float; :content:array; new_content:array
 
-	attr_accessor(:oxygen, :content, :new_content)	
+	attr_accessor(:oxygen, :content, :new_content, :already_cloned)	
 
 	# Construtor do Objeto Alga.
 	#
@@ -17,6 +17,7 @@ class Alga
 		@new_content = fill_content(sudoku)
 		@new_content = refill_content(@new_content)
 		@oxygen = evaluate_oxygen
+		@already_cloned = false
 	end
 
 	# Método que recebe um sudoku pré-preenchido e termina de preenchê-lo
@@ -44,15 +45,42 @@ class Alga
 	# Parâmetros: old_content:array
 
 	def refill_content(old_content)
-		p @content
 		old_content.each_with_index.map do |line, i| 
-			cannot_remove = []
-
 			line.each_with_index do |v, j| 
-				cannot_remove << j if @content[i][j].eql? v
-				line.count(v) > 1 ? worst_of_line(old_content, cannot_remove, line, v,).each { |k, v| line[k.to_s.to_i] = nil } : v
+				cannot_remove_line = []
+				if line.count(v) > 1 and v != nil
+
+					if @content[i].include? v
+						cannot_remove_line.push(@content[i].index(v).to_s)
+					end
+
+					worst_of_line(old_content, cannot_remove_line, line, v).each { |k, v| line[k.to_s.to_i] = nil }
+				end
 			end
 		end
+
+		new_sudoku = []
+
+		old_content.transpose.each_with_index.map do |column, i|
+			column.each_with_index do |v, j| 
+				if column.count(v) > 1 and v != nil
+					cannot_remove_column = nil
+
+					if @content.transpose[i].include? v
+						cannot_remove_column = @content.transpose[i].index(v)
+					end
+
+					worst_of_column(column, cannot_remove_column, v).each { |v| column[v.to_i] = nil }
+				end
+			end
+
+			new_sudoku.push(column)
+		end
+
+		new_sudoku = new_sudoku.transpose
+		treat_squares(new_sudoku)
+
+		return new_sudoku
 	end
 
 	# Método auxiliar que retorna os piores indices para serem removidos em caso de valores clonados em uma linha.
@@ -60,19 +88,46 @@ class Alga
 	# Parâmetros: content:array; line:array; value:string
 	# Retorno: worst_indexes:hash
 
-	def worst_of_line(content, cannot_remove, line, value)
+	def worst_of_line(content, cannot_remove_line, line, value)
 		temp = content.transpose
 		worst_indexes = {}
 		line_count = line.count(value) - 1
+		random = [true, false].sample
 
-		temp.each_with_index { |column, i| worst_indexes[i.to_s.to_sym] = column.count(value) if line[i] == value }
+		temp.each_with_index { |column, i| worst_indexes[i.to_s.to_sym] = column.count(value) if line[i].eql? value }
 
-		worst_indexes.sort_by {|k, v| v}.reverse.first(line_count).to_h
+		if cannot_remove_line.any?
+			worst_indexes.delete(cannot_remove_line.first.to_sym)
+		end
+
+		random ? worst_indexes.sort_by {|k, v| v}.reverse.first(line_count).to_h : worst_indexes.sort_by {|k, v| v}.first(line_count).to_h
 	end
 
 	# Not implemented yet
 
-	def worst_of_column(content, column); end
+	def worst_of_column(column, cannot_remove_column, value)
+		worst_indexes = []
+		column_count = column.count(value) - 1
+		column.each_with_index { |v, i| worst_indexes.push(i.to_s) if v.eql? value}
+		random = [true, false].sample
+
+		unless cannot_remove_column.nil?
+			worst_indexes.delete_at(cannot_remove_column)
+		end	
+
+		random ? worst_indexes.first(column_count) : worst_indexes.last(column_count)
+	end
+
+	def treat_squares(content)
+		size = content.size/2
+
+		for i in (0..content.size-1).step(size)
+			content[i].first(size).each.map { |v| content[i].count(v) > (SIZE_SUDOKU/2) - 1 and v != nil ? nil : v } 
+			content[i+1].first(size).each.map { |v| content[i+1].count(v) > (SIZE_SUDOKU/2) - 1 and  v != nil ? nil : v } 
+			content[i].last(size).each.map { |v| content[i].count(v) > (SIZE_SUDOKU/2) - 1 and v != nil ? nil : v } 
+			content[i+1].last(size).each.map { |v| content[i+1].count(v) > (SIZE_SUDOKU/2) - 1 and v != nil ? nil : v } 
+		end
+	end
 
 	# Método para avaliar a produção de oxigênio da Alga.
 	#
@@ -80,12 +135,10 @@ class Alga
 
 	def evaluate_oxygen
 		oxygen_produced = 0
-		squares = generate_squares(@new_content)
 		
 		@new_content.each { |line| oxygen_produced += evaluate_line(line) }
 		@new_content.transpose.each { |column| oxygen_produced += evaluate_column(column) }
-		squares.each {|square| oxygen_produced += evaluate_square(square) }
-
+		
 		return oxygen_produced
 	end
 
@@ -96,12 +149,13 @@ class Alga
 
 	def generate_squares(content)
 		squares = []
-		
-		for i in (0..content.size-1).step(content.size/2)
-			square_1 = (content[i][0..content.size/2-1] << content[i+1][0..content.size/2-1]).flatten
-			square_2 = (content[i][content.size/2..content.size/2+1] << content[i+1][content.size/2..content.size/2+1]).flatten
+		size = content.size/2
 
-			squares << square_1 << square_2
+		for i in (0..content.size-1).step(size)
+			square_1 = content[i].first(size) << content[i+1].first(size)
+			square_2 = content[i].last(size) << content[i+1].last(size)
+
+			squares << square_1.flatten << square_2.flatten
 		end
 		
 		return squares
@@ -129,22 +183,15 @@ class Alga
 		return column_oxygen_produced
 	end
 
-	# Método auxiliar que avalia a produção de oxigênio de um quadrante.
-	#
-	# Parâmetros: square:array
-	# Retorno: square_oxygen_produced:float 
-
-	def evaluate_square(square)
-		square_oxygen_produced = square.compact.uniq.size * OXYGEN_ONE_VALUE
-
-		return square_oxygen_produced
-	end
-
 	# Not implemented yet.
 
-	def binary_division
-		child = @new_content
+	def set_content
+		@new_content = fill_content(@new_content)
+		@new_content = refill_content(@new_content)
+		@oxygen = evaluate_oxygen
+	end
 
-		return child
+	def equal(other)
+		self.new_content == other.new_content
 	end
 end
