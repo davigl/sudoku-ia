@@ -63,7 +63,7 @@ class Oceano
     	menu
 
         while true
-    		@actual_generation = Marshal.load(Marshal.dump(@algas))
+    		@current_generation = Marshal.load(Marshal.dump(@algas))
 
     		puts "Número de gerações: #{@count_geracao}"
 
@@ -87,8 +87,8 @@ class Oceano
 				end
 			end
 
-			if @algas.size.eql? @actual_generation.size
-		    	break if @actual_generation.each_with_index.all? {|alga, i| alga.equal (@algas[i])}
+			if @algas.size.eql? @current_generation.size
+		    	break if @current_generation.each_with_index.all? {|alga, i| alga.equal (@algas[i])}
 			end
         end
 
@@ -96,8 +96,12 @@ class Oceano
         @algas.each {|alga| puts "sudoku: #{alga.new_content} oxigen: #{alga.oxygen}" if alga.oxygen.eql? (100.0)}
 	end
 
-	def fragmentation(alga_1, alga_2)
-		alga_1.new_content.each_with_index.map {|line, i| line.each_with_index.map {|value, j| value.nil? ? alga2.new_content[i][j] : value} }
+	def select(population)
+		@algas.sample(2)
+	end
+
+	def fragmentation(selection)
+		selection.first.new_content.each_with_index.map {|line, i| line.each_with_index.map {|value, j| value.nil? ? selection.last.new_content[i][j] : value} }
 	end
 
 	def binary_division(alga)
