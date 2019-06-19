@@ -109,7 +109,8 @@ class Alga
 	# Método para avaliar a produção de oxigênio da Alga.
 	# 
 	# Contexto: As algas possuem uma taxa de produção de oxigênio, essa taxa é obtida quando
-	# a alga se encontra em pontos próximos a solução do sudoku.
+	# a alga se encontra em pontos próximos a solução do sudoku, as algas que produzem baixas taxas
+	# de oxigênio são eliminadas do espaço de busca.
 	#
 	# Retorno: oxygen_produced:float
 
@@ -226,6 +227,10 @@ class Alga
 	end
 	
 	# Método para verificar igualdade entre objetos Alga.
+	# 
+	# Contexto: Um par de algas são iguais se possuem o mesmo DNA, portanto devem possuir o mesmo conteúdo (sudoku)
+	# 
+	# Retorno: boolean
 
 	def equal(other)
 		self.new_content == other.new_content
