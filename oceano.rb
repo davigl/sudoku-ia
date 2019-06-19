@@ -65,8 +65,11 @@ class Oceano
         while true
     		@actual_generation = Marshal.load(Marshal.dump(@algas))
 
-    		# puts "Geração #{@count_geracao}"
-    		done = true
+    		puts "Número de gerações: #{@count_geracao}"
+
+    		if @algas.size > 1
+
+    		end
 
 			@algas.each do |alga| 
 				# puts "sudoku: #{alga.new_content}"
@@ -79,7 +82,7 @@ class Oceano
 					@algas.delete(alga)
 				end
 
-				if alga.oxygen > 85 and not alga.already_cloned
+				if alga.oxygen.between?(85, 99) and not alga.already_cloned
 					@algas.push(binary_division(alga))
 				end
 			end
@@ -87,11 +90,9 @@ class Oceano
 			if @algas.size.eql? @actual_generation.size
 		    	break if @actual_generation.each_with_index.all? {|alga, i| alga.equal (@algas[i])}
 			end
-
-        	@count_geracao += 1
         end
 
-        puts "Número de gerações: #{@count_geracao}"
+		@count_geracao += 1
         @algas.each {|alga| puts "sudoku: #{alga.new_content} oxigen: #{alga.oxygen}" if alga.oxygen.eql? (100.0)}
 	end
 
