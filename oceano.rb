@@ -1,5 +1,7 @@
 require_relative "alga"
 
+# Author: Davi Guimarães Leite
+
 class Oceano
 
 	# Método construtor do oceano.
@@ -45,7 +47,6 @@ class Oceano
     	puts "| polifilético de organismos fotossintéticos cujo    |"
     	puts "| ciclo de vida se completa geralmente em meio aquático. |"
     	puts "+ -------------------------------------------------- +"
-
 
     	puts "+ ----------------------------------------------------- +"
     	puts "| Estima-se que cerca de 90 porcento do oxigênio presente|" 
@@ -100,6 +101,9 @@ class Oceano
 
 					@algas.delete(alga)
 				end
+
+				p alga.oxygen
+				sleep 2
 			end
 
 			if @algas.size.eql? @current_generation.size
@@ -147,6 +151,7 @@ Oceano.presentation
 puts "Digite o número de algas da população inicial."
 population = gets.chomp.to_i
 
-game = Oceano.new([[3, nil, 4, nil], [nil, 1, nil, 2], [nil, 4, nil, 3], [2, nil, 1, nil]], population)
+game = Oceano.new([[nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil],
+				   [nil, nil, nil, nil, nil, nil], [nil, nil, nil, nil, nil, nil]], population)
 game.menu
 game.run

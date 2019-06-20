@@ -1,5 +1,5 @@
 class Alga
-	SIZE_SUDOKU = 4
+	SIZE_SUDOKU = 6
 	OXYGEN_ONE_VALUE = 100/((SIZE_SUDOKU ** 2) * 2).to_f
 	
 	# Métodos de Get (alga.oxygen, alga.content, alga.new_content)
