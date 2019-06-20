@@ -96,25 +96,22 @@ class Oceano
 					@algas.push(alga.binary_division)
 				end
 
-				if alga.oxygen.between?(99.99, 100.0)
+				if alga.oxygen.between?(99, 100.0)
 					resolutions.push(alga.new_content)
 
-					@algas.delete(alga)
+					break
 				end
-
-				p alga.oxygen
-				sleep 2
 			end
 
 			if @algas.size.eql? @current_generation.size
 		    	break if resolutions.size >= 1
 			end
-
-			@count_geracao += 1
 			
-			if @algas.size != @current_generation
+			unless @algas.size.eql? @current_generation.size
 				puts "Número de algas no ambiente de busca: #{@algas.size}"
 			end
+
+			@count_geracao += 1
         end
 
         puts "Número de gerações: #{@count_geracao}", "As Algas a seguir possuem produção de oxigênio em 100%, portanto resolvem o problema do sudoku.", ""

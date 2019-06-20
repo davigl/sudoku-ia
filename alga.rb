@@ -34,7 +34,7 @@ class Alga
 		filled_array = sudoku
 
 		SIZE_SUDOKU.times do |i|
-			for j in 0..SIZE_SUDOKU-1
+			SIZE_SUDOKU.times do |j|
 				if filled_array[i][j].nil? 
 					filled_array[i][j] = rand(1..SIZE_SUDOKU)
 				end
@@ -52,8 +52,10 @@ class Alga
 	# Parâmetros: old_content:array
 
 	def ocean_localization(old_content)
+		new_sudoku = []
+
 		old_content.each_with_index.map do |line, i| 
-			line.each_with_index do |v, j| 
+			line.each_with_index do |v, j|
 				cannot_remove_line = []
 				if line.count(v) > 1 and v != nil
 
@@ -65,8 +67,6 @@ class Alga
 				end
 			end
 		end
-
-		new_sudoku = []
 
 		old_content.transpose.each_with_index.map do |column, i|
 			column.each_with_index do |v, j| 
@@ -136,10 +136,8 @@ class Alga
 
 		temp.each_with_index { |column, i| worst_indexes[i.to_s.to_sym] = column.count(value) if line[i].eql? value }
 
-		if cannot_remove_line.any?
-			worst_indexes.delete(cannot_remove_line.first.to_sym)
-		end
-
+		worst_indexes.delete(cannot_remove_line.first.to_sym) if cannot_remove_line.any?
+			
 		random ? worst_indexes.sort_by {|k, v| v}.reverse.first(line_count).to_h : worst_indexes.sort_by {|k, v| v}.first(line_count).to_h
 	end
 
@@ -154,10 +152,8 @@ class Alga
 		column.each_with_index { |v, i| worst_indexes.push(i.to_s) if v.eql? value}
 		random = [true, false].sample
 
-		unless cannot_remove_column.nil?
-			worst_indexes.delete_at(cannot_remove_column)
-		end	
-
+		worst_indexes.delete_at(cannot_remove_column) unless cannot_remove_column.nil?
+			
 		random ? worst_indexes.first(column_count) : worst_indexes.last(column_count)
 	end
 	
