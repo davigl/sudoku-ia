@@ -8,7 +8,7 @@ module TreatArray
   include Oxygen
   include WorstArray
 
-  # Uses: treat the lines in a sudoku, remaining the best unique values;
+  # Treat the lines in a sudoku, remaining the best unique values;
   # Parameters: old_content:array.
 
   def treat_line(old_content)
@@ -24,7 +24,7 @@ module TreatArray
     end
   end
 
-  # Uses: treat the coluns in a sudoku, remaining the best unique values;
+  # Treat the coluns in a sudoku, remaining the best unique values;
   # Parameter: content:array.
 
   def treat_column(old_content, new_sudoku)
@@ -43,7 +43,7 @@ module TreatArray
     end
   end
 
-  # Uses: treat the squares of a sudoku, remaining the best unique values;
+  # Treat the squares of a sudoku, remaining the best unique values;
   # Parameter: content:array.
 
   def treat_squares(content)
@@ -61,7 +61,7 @@ module TreatArray
 
   private
 
-  # Uses: get a square from a sudoku and treat them.
+  # Get a square from a sudoku and treat them.
 
   def treat_squares_aux(part)
     size_required = (SIZE_SUDOKU/2) - 1

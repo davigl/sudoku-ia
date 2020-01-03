@@ -2,7 +2,7 @@
 
 # Oxygen module that contains auxiliar methods used by seaweed and ocean
 module Presentation
-  # Uses: Ilustration method.
+  # Ilustration method.
   def self.presentation
     puts '     *  *          /*._   '
     puts " *  *'*  *'*   .-*'`   `*-.._.-'/"
@@ -30,7 +30,7 @@ module Presentation
     puts 'Insert the initial number of seaweeds at the ocean.'
   end
 
-  # Uses: Ilustration method;
+  # Ilustration method;
   # Parameters: seaweeds:array, sudoku:array.
 
   def self.menu(seaweeds, sudoku)
@@ -52,7 +52,7 @@ module Presentation
     gets
   end
 
-  # Uses: Ilustration method;
+  # Ilustration method;
   # Parameters: resolutions:array, count_generations:integer.
 
   def self.show_resolution(resolutions, count_generations)

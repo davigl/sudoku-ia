@@ -14,7 +14,6 @@ class Ocean
   attr_reader :sudoku, :seaweeds
 
   # Ocean constructor
-  #
   # Parameters: sudoku:array, initial_population:integer
 
   def initialize(sudoku, initial_population)
@@ -22,8 +21,7 @@ class Ocean
     @sudoku = sudoku
   end
 
-  # Uses: generate seaweed population at a search space;
-  #
+  # Generate seaweed population at a search space;
   # Parameters: sudoku:array, population:integer
   # Return: seaweeds:array
 
@@ -38,7 +36,7 @@ class Ocean
     seaweeds
   end
 
-  # Uses: main run method, it stops when found a resolution.
+  # Main run method, it stops when found a resolution.
 
   def run
     resolutions = []
@@ -62,7 +60,7 @@ class Ocean
     Presentation.show_resolution(resolutions, count_generation)
   end
 
-  # Uses: it modifies the actual generation;
+  # Modifies the actual generation;
   # Parameters: seaweeds:array, resolutions:array;
   # Return: resolutions:array.
 

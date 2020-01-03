@@ -2,7 +2,7 @@
 
 # This module contains seaweed reproduction methods.
 module Reproduction
-  # Uses: select two random seaweeds, remove them from the search space to generate
+  # Select two random seaweeds, remove them from the search space to generate
   # a new specie from both;
   # Parameters: seaweeds:array;
   # Return: seaweeds_selection:array.
@@ -14,7 +14,7 @@ module Reproduction
     seaweeds_selection
   end
 
-  # Uses: reproduce a new better specie through fragmentation process;
+  # Reproduce a new better specie through fragmentation process;
   # Parameters: seaweeds:array;
   # Return: seaweed:Seaweed.
 

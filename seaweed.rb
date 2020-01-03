@@ -8,14 +8,12 @@ class Seaweed
   include Oxygen
   include TreatArray
 
-  # Get Methods (seaweed.oxygen, seaweed.content, seaweed.new_content)
-  # Variables: oxygen:float; content:array; new_content:array
+  # Variables: oxygen:float; content:array; new_content:array.
 
   attr_accessor(:oxygen, :content, :new_content, :already_cloned)
 
   # Seaweed constructor;
-  # Parameters: sudoku:array;
-  # Attributes: content:array, new_content, oxygen:float.
+  # Parameters: sudoku:array.
 
   def initialize(sudoku)
     @content = Marshal.load(Marshal.dump(sudoku))
@@ -25,12 +23,12 @@ class Seaweed
     @already_cloned = false
   end
 
-  # Uses: receives a pre-filled sudoku and it finishes to fill with random values;
+  # Receives a pre-filled sudoku and it finishes to fill with random values;
   # Context: Seaweeds search for nutrients at the ocean using photosynthesis,
   # producing oxygen, so they move by the ocean using (own moviment: ameboid move) or
   # (not own move: environmental movement);
   # Parameters: sudoku:array;
-  # Return: sudoku:array;
+  # Return: sudoku:array.
 
   def search_nutrients(sudoku)
     SIZE_SUDOKU.times do |line|
@@ -42,7 +40,7 @@ class Seaweed
     sudoku
   end
 
-  # Uses: changes seaweed ocean localization;
+  # Changes seaweed ocean localization;
   # Parameters: old_content:array;
   # Return: new_sudoku:array.
 
@@ -57,16 +55,16 @@ class Seaweed
     new_sudoku
   end
 
-  # Uses: reproduction by binary division, commonly occurs in unicellular beings;
-  # Return: child:Seaweed.
+  # Reproduction by binary division, commonly occurs in unicellular beings;
+  # Return: child:seaweed.
 
   def binary_division
     self.already_cloned = true
 
     Marshal.load(Marshal.dump(self))
   end
-  
-  # Uses: updates some seaweed values;
+
+  # Updates some seaweed values.
 
   def set_content
     @new_content = search_nutrients(@new_content)

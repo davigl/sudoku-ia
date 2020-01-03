@@ -2,7 +2,7 @@
 
 # WorstArray module that contains auxiliar methods which gives worst sudoku indexes
 module WorstArray
-  # Uses: get the worst indexes to be removed in a line;
+  # Get the worst indexes to be removed in a line;
   # Parameters: content:array, cannot_remove_line:symbol, line:array, value_target:string;
   # Return: worst_indexes:hash.
 
@@ -17,7 +17,7 @@ module WorstArray
     worst_indexes.sort_by { |_k, v| v }.last(line_count).to_h
   end
 
-  # Uses: get the worst indexes to be removed in a column;
+  # Get the worst indexes to be removed in a column;
   # Parameters: column:array; cannot_remove_column:integer; value_target:string;
   # Return: worst_indexes:array
 
