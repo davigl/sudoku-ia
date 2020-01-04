@@ -1,5 +1,15 @@
-# Sudoku Resolver
-## Bio-Inspired in Seaweeds Algorithm
+<h1 align="center">
+    Sudoku Resolver
+</h1>
+<h2 align="center">
+    🌿 Bio-Inspired in Seaweeds
+</h2>
+
+<div align="center">
+
+[![Inline docs](http://inch-ci.org/github/Davigl/sudoku-ia.svg?branch=master)](http://inch-ci.org/github/Davigl/sudoku-ia)
+[![Star on GitHub][github-star-badge]][github-star]
+</div>
 
 ### RubyCritic Analysis
 
@@ -59,3 +69,6 @@ ruby ocean.rb
 ### License
 
 Copyright © 2019, [Davi Guimarães](https://github.com/davigl).
+
+[github-star-badge]: https://img.shields.io/github/stars/dylanvann/react-native-fast-image.svg?style=social
+[github-star]:https://github.com/davigl/sudoku-ia/stargazers
