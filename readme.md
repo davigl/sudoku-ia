@@ -1,11 +1,10 @@
 <h1 align="center">
     Sudoku Resolver
 </h1>
-<h2 align="center">
-    Genetic Algorithm Bio-Inspired in Seaweeds 🌿
-</h2>
 
 <div align="center">
+
+Genetic Algorithm Bio-Inspired in Seaweeds 🌿
 
 [![Inline docs][docs-badge]][docs]
 
