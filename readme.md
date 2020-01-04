@@ -2,22 +2,23 @@
     Sudoku Resolver
 </h1>
 <h2 align="center">
-    🌿 Bio-Inspired in Seaweeds
+    Genetic Algorithm Bio-Inspired in Seaweeds 🌿
 </h2>
 
 <div align="center">
 
-[![Inline docs](http://inch-ci.org/github/Davigl/sudoku-ia.svg?branch=master)](http://inch-ci.org/github/Davigl/sudoku-ia)
+[![Inline docs][docs-badge]][docs]
+
 [![Star on GitHub][github-star-badge]][github-star]
+[![Watch on GitHub][github-watch-badge]][github-watch]
 </div>
 
-### RubyCritic Analysis
-
-Rubycritic is a gem that wraps around static analysis gems such as Reek, Flay and Flog to provide a quality report of Ruby code.
-
-**Score**: 89.40
+<div align="center">
 
 ![Rate 89.40](https://i.imgur.com/1Ej6tAl.gif)
+
+***Ruby Critic Score**: 89.40*
+</div>
 
 ### Problem
 
@@ -70,5 +71,9 @@ ruby ocean.rb
 
 Copyright © 2019, [Davi Guimarães](https://github.com/davigl).
 
-[github-star-badge]: https://img.shields.io/github/stars/dylanvann/react-native-fast-image.svg?style=social
+[docs]: http://inch-ci.org/github/Davigl/sudoku-ia
+[docs-badge]: http://inch-ci.org/github/Davigl/sudoku-ia.svg?branch=master
+[github-star-badge]: https://img.shields.io/github/stars/davigl/sudoku-ia.svg?style=social
 [github-star]:https://github.com/davigl/sudoku-ia/stargazers
+[github-watch-badge]: https://img.shields.io/github/watchers/davigl/sudoku-ia.svg?style=social
+[github-watch]: https://github.com/davigl/sudoku-ia/watchers
