@@ -20,10 +20,12 @@ Genetic Algorithm Bio-Inspired in Seaweeds 🌿
 </div>
 
 ### Problem
+---
 
 Seaweeds are arranged at a <strong> (Ocean) </strong> search space and they **must solve a N-size sudoku**.
 
 ###  About the Algorithm
+---
 
 Search and optimization algorithm with bio-inspiration in seaweed (genetic algorithm). This algorithm follow these steps to get a solution.
 
@@ -35,7 +37,17 @@ Search and optimization algorithm with bio-inspiration in seaweed (genetic algor
 5 Create new generation / group and return to step 2 until the stop condition is reached.
 ```
 
+### Running the Script
+---
+
+Set sudoku size by editing **ocean.rb** and **oxygen.rb**, then run.
+
+```bash
+ruby ocean.rb
+```
+
 ### About the Seaweeds
+---
 
 ```
     *  *          /*._   
@@ -58,15 +70,9 @@ Algae, both unicellular and multicellular, have asexual and sexual reproduction.
 
 Many species of algae are unicellular beings, living free in the water and moving with the aid of flagella or amoeboid movement. Some species have no movement of their own and occur in the environment either in coccoid form (coccus, the simplest type of bacteria) or in mucoid-covered capsoid form. However, even unicellular algae can sometimes be grouped into colonial forms, mobile or not.
 
-### Running the Script
-
-Set sudoku size by editing **ocean.rb** and **oxygen.rb**, then run.
-
-```shell
-ruby ocean.rb
-```
 
 ### License
+---
 
 Copyright © 2019, [Davi Guimarães](https://github.com/davigl).
 
