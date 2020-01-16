@@ -31,8 +31,8 @@ Search and optimization algorithm with bio-inspiration in seaweed (genetic algor
 
 ```
 1 Create Candidates (Seaweeds);
-2 Seaweeds are evaluated;
-3 Allows adaptation based on the best;
+2 Seaweeds are evaluated by oxygen production;
+3 Allows adaptation based on the best (fragmentation, binary division);
 4 Select the ones to replace;
 5 Create new generation / group and return to step 2 until the stop condition is reached.
 ```
@@ -72,7 +72,6 @@ Many species of algae are unicellular beings, living free in the water and movin
 
 
 ### License
----
 
 Copyright © 2019, [Davi Guimarães](https://github.com/davigl).
 
