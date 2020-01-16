@@ -4,7 +4,7 @@
 
 <div align="center">
 
-Genetic Algorithm Bio-Inspired in Seaweeds 🌿
+Ruby Genetic Algorithm Bio-Inspired in Seaweeds 🌿
 
 [![Inline docs][docs-badge]][docs]
 
@@ -19,13 +19,15 @@ Genetic Algorithm Bio-Inspired in Seaweeds 🌿
 ***Ruby Critic Score**: 89.40*
 </div>
 
-### Problem
----
+<h2>
+Problem
+</h2>
 
 Seaweeds are arranged at a <strong> (Ocean) </strong> search space and they **must solve a N-size sudoku**.
 
-###  About the Algorithm
----
+<h2>
+About the Algorithm
+</h2>
 
 Search and optimization algorithm with bio-inspiration in seaweed (genetic algorithm). This algorithm follow these steps to get a solution.
 
@@ -37,8 +39,9 @@ Search and optimization algorithm with bio-inspiration in seaweed (genetic algor
 5 Create new generation / group and return to step 2 until the stop condition is reached.
 ```
 
-### Running the Script
----
+<h2>
+Running the Script
+</h2>
 
 Set sudoku size by editing **ocean.rb** and **oxygen.rb**, then run.
 
@@ -46,8 +49,9 @@ Set sudoku size by editing **ocean.rb** and **oxygen.rb**, then run.
 ruby ocean.rb
 ```
 
-### About the Seaweeds
----
+<h2>
+About the Seaweeds
+</h2>
 
 ```
     *  *          /*._   
@@ -70,8 +74,9 @@ Algae, both unicellular and multicellular, have asexual and sexual reproduction.
 
 Many species of algae are unicellular beings, living free in the water and moving with the aid of flagella or amoeboid movement. Some species have no movement of their own and occur in the environment either in coccoid form (coccus, the simplest type of bacteria) or in mucoid-covered capsoid form. However, even unicellular algae can sometimes be grouped into colonial forms, mobile or not.
 
-
-### License
+<h2>
+License
+</h2>
 
 Copyright © 2019, [Davi Guimarães](https://github.com/davigl).
 
