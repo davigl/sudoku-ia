@@ -23,7 +23,7 @@ Ruby Genetic Algorithm Bio-Inspired in Seaweeds 🌿
 Problem
 </h2>
 
-Seaweeds are arranged at a <strong> (Ocean) </strong> search space and they **must solve an even N-size sudoku**.
+Seaweeds are arranged at an <strong> (Ocean) </strong> search space and they **must solve an even N-size sudoku**.
 
 <h2>
 About the Algorithm
